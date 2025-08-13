@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore properties files, but allow specific ones
+*.properties
+!/src/main/resources/application.properties
+!/src/main/resources/application-test.properties
+!/.mvn/wrapper/maven-wrapper.properties
