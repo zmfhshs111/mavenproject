@@ -1,5 +1,7 @@
-package com.rookies4.MySpringBoot.book;
+package com.rookies4.MySpringBoot.controller;
 
+import com.rookies4.MySpringBoot.entity.Book;
+import com.rookies4.MySpringBoot.repository.BookRepository;
 import com.rookies4.MySpringBoot.exception.BusinessException;
 
 import org.springframework.beans.factory.annotation.Autowired;
