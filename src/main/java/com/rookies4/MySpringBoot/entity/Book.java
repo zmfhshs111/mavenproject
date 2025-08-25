@@ -1,9 +1,6 @@
 package com.rookies4.MySpringBoot.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -14,9 +11,13 @@ public class Book {
     private Long id;
     private String title;
     private String author;
+    @Column(unique = true)
     private String isbn;
     private LocalDate publishDate;
     private Integer price;
+
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private BookDetail bookDetail;
 
     // Getters and Setters
     public Long getId() {
@@ -65,5 +66,16 @@ public class Book {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public BookDetail getBookDetail() {
+        return bookDetail;
+    }
+
+    public void setBookDetail(BookDetail bookDetail) {
+        this.bookDetail = bookDetail;
+        if (bookDetail != null) {
+            bookDetail.setBook(this);
+        }
     }
 }
