@@ -10,12 +10,24 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    List<Book> findByIsbn(String isbn);
+    Optional<Book> findByIsbn(String isbn); // 반환 타입을 Optional<Book>으로 변경
 
-    List<Book> findByAuthor(String author);
+    List<Book> findByAuthorContainingIgnoreCase(String author);
+
+    List<Book> findByTitleContainingIgnoreCase(String title);
 
     @Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookDetail WHERE b.id = :id")
     Optional<Book> findByIdWithBookDetail(@Param("id") Long id);
 
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookDetail JOIN FETCH b.publisher WHERE b.id = :id")
+    Optional<Book> findByIdWithAllDetails(@Param("id") Long id);
+
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.bookDetail WHERE b.isbn = :isbn")
+    Optional<Book> findByIsbnWithBookDetail(@Param("isbn") String isbn);
+
     boolean existsByIsbn(String isbn);
+
+    List<Book> findByPublisherId(Long publisherId);
+
+    Long countByPublisherId(Long publisherId);
 }
